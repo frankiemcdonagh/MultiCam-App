@@ -27,13 +27,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Production"
+            android:name=".ProductionActivity"
             android:label="@string/title_activity_production"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="landscape"/>
-        <activity
-            android:name=".FFmpegPage"
-            android:label="@string/title_activity_ffmpeg_page"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="landscape"/>
     </application>

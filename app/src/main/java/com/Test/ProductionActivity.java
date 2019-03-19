@@ -23,7 +23,7 @@ import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedExceptio
 import java.io.File;
 import java.util.ArrayList;
 
-public class Production extends AppCompatActivity {
+public class ProductionActivity extends AppCompatActivity {
 
     public  int currentposition;
     @Override

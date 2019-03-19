@@ -19,19 +19,11 @@
         android:text="Production page" />
 
     <Button
-        android:id="@+id/BtnFFmpeg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="FFmpeg page"
-        android:layout_below="@+id/btnProduction"
-        android:onClick="BtnFFmpegClick"
-        />
-    <Button
         android:id="@+id/btnAddVideos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="add videos"
-        android:layout_below="@id/BtnFFmpeg"
+        android:layout_below="@id/btnProduction"
         android:onClick="BtnAddVideosClick"/>
     <Button
         android:id="@+id/btnSetStartTime"
