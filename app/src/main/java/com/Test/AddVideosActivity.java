@@ -20,17 +20,30 @@ public class AddVideosActivity extends AppCompatActivity {
     ListView videoList;
     CustomAdapter customAdapter;
     ArrayList<VideoListItemModel> videoArray;
-    ArrayList<VideoListItemModel> newarray;
+    ArrayList<VideoListItemModel> newArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_videos);
         videoList = findViewById(R.id.videoList);
         videoArray = new ArrayList<>();
-        Bundle bundle = getIntent().getExtras();
+        Intent i = getIntent();
+        Bundle bundle = i.getExtras();
         if(bundle != null) {
-            videoArray = bundle.getParcelableArrayList("list");
+            newArray = bundle.getParcelableArrayList("list");
         }
+        String mainVideo = i.getStringExtra("VideoPath");
+        String startTime = i.getStringExtra("Average Time");
+        if(mainVideo != null){
+            for(VideoListItemModel video : newArray)
+            {
+                if(mainVideo.equals(video.getName())){
+                    video.setStartTime(startTime);
+                    break;
+                }
+            }
+        }
+        if(newArray != null) videoArray.addAll(newArray);
         customAdapter = new CustomAdapter(this, R.layout.addvideo_item, videoArray);
         videoList.setAdapter(customAdapter);
 
@@ -44,9 +57,6 @@ public class AddVideosActivity extends AppCompatActivity {
         startActivityForResult(i, 100);
     }
 
-    public void buttonAddTime(View v){
-        Log.i("Unique message", "You clicked the button");
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -61,7 +71,7 @@ public class AddVideosActivity extends AppCompatActivity {
 
             retriever.release();
 
-            VideoListItemModel testEntry = new VideoListItemModel(selectedUri.toString(), "0");
+            VideoListItemModel testEntry = new VideoListItemModel(selectedUri.toString(), "312");
             videoArray.add(testEntry);
             customAdapter.notifyDataSetChanged();
             //String newString = "newString";

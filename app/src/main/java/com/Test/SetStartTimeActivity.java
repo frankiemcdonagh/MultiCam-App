@@ -73,7 +73,7 @@ public class SetStartTimeActivity extends AppCompatActivity {
         i.putExtra("Average Time", stringAverage);
         Bundle b = new Bundle();
         b.putParcelableArrayList("list", arrayList);
-        //i.putExtras(b);
+        i.putExtras(b);
         this.startActivity(i);
     }
 }

@@ -37,7 +37,7 @@ public class VideoListItemModel implements Parcelable {
     public String getStartTime(){
         return startTime;
     }
-    public void setStartTime(){
+    public void setStartTime(String s){
         this.startTime = startTime;
     }
 
