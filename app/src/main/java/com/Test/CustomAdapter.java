@@ -35,7 +35,7 @@ public class CustomAdapter extends ArrayAdapter<VideoListItemModel> {
         //get all the information for each field
         final String name = getItem(position).getName();
         final String startTime = getItem(position).getStartTime();
-        int EndTime = 0;
+
         //fill in the object with the information
         final VideoListItemModel videoListItemModel = new VideoListItemModel(name, startTime);
 
