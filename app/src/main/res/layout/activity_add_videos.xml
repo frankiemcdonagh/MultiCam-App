@@ -25,5 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:text="Convert"/>
+        android:text="Convert"
+        android:onClick="btnConvertVideos"/>
 </RelativeLayout>

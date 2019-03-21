@@ -7,7 +7,7 @@ public class VideoListItemModel implements Parcelable {
     private String name;
     private String startTime;
 
-    public VideoListItemModel(String name, String startTime){
+    public VideoListItemModel(String name,String startTime){
         this.name=name;
         this.startTime=startTime;
     }
@@ -40,6 +40,8 @@ public class VideoListItemModel implements Parcelable {
     public void setStartTime(String s){
         this.startTime = startTime;
     }
+
+
 
     @Override
     public int describeContents() {

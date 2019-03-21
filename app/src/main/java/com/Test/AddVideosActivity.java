@@ -1,6 +1,8 @@
 package com.Test;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -13,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AddVideosActivity extends AppCompatActivity {
 
@@ -37,6 +40,7 @@ public class AddVideosActivity extends AppCompatActivity {
         if(mainVideo != null){
             for(VideoListItemModel video : newArray)
             {
+                //Todo: Set start time not working.
                 if(mainVideo.equals(video.getName())){
                     video.setStartTime(startTime);
                     break;
@@ -67,14 +71,58 @@ public class AddVideosActivity extends AppCompatActivity {
             MediaMetadataRetriever retriever = new MediaMetadataRetriever();
             retriever.setDataSource(getApplicationContext(), selectedUri);
             String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-            long timeInMillisec = Long.parseLong(time );
+            long timeInMillisec = Long.parseLong(time);
 
             retriever.release();
-
-            VideoListItemModel testEntry = new VideoListItemModel(selectedUri.toString(), "312");
-            videoArray.add(testEntry);
-            customAdapter.notifyDataSetChanged();
-            //String newString = "newString";
         }
+    }
+
+    public void btnConvertVideos(View view) {
+        ArrayList<String> realVideoPaths = new ArrayList<>();
+        ArrayList<Integer> durations = new ArrayList<>();
+        if(videoArray != null) {
+            for (VideoListItemModel video : videoArray) {
+                String videoName = video.getName();
+                Uri videoUri = Uri.parse(videoName);
+
+                int startTime = Integer.parseInt(video.getStartTime());
+
+                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                retriever.setDataSource(getApplicationContext(), videoUri);
+                String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                int timeInMillisec = Integer.parseInt(time);
+                int durationAfterStartTime = timeInMillisec - startTime;
+                durations.add(durationAfterStartTime);
+
+
+
+                retriever.release();
+                realVideoPaths.add(getRealPathFromUri(getApplicationContext(), videoUri));
+            }
+            Collections.sort(durations);
+            int endVideoDuration = durations.get(0);
+        }
+    }
+    private String getRealPathFromUri(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        finally{
+            if(cursor!=null)
+            {
+                cursor.close();
+            }
+        }
+
     }
 }
