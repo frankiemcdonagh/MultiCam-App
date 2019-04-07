@@ -19,20 +19,31 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class AddVideosActivity extends AppCompatActivity {
+public class AddVideosActivity extends AppCompatActivity
+{
 
     Uri selectedUri;
     ListView videoList;
     CustomAdapter customAdapter;
     ArrayList<VideoListItemModel> videoArray;
     ArrayList<VideoListItemModel> newArray;
-    ArrayList<ProductionVideoModel> productionVideoModelArrayList;
+    ArrayList<ProductionVideoModel> productionVideoModelArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_videos);
         videoList = findViewById(R.id.videoList);
+        //create video array.
         videoArray = new ArrayList<>();
+        //filling video list if there is a bundle present.
+        fillList();
+        //setting custom adapter and list
+        customAdapter = new CustomAdapter(this, R.layout.addvideo_item, videoArray);
+        videoList.setAdapter(customAdapter);
+
+    }
+
+    public void fillList(){
         Intent i = getIntent();
         Bundle bundle = i.getExtras();
         if(bundle != null) {
@@ -51,9 +62,6 @@ public class AddVideosActivity extends AppCompatActivity {
             }
         }
         if(newArray != null) videoArray.addAll(newArray);
-        customAdapter = new CustomAdapter(this, R.layout.addvideo_item, videoArray);
-        videoList.setAdapter(customAdapter);
-
     }
 
     public void addVideo(View v)
@@ -71,7 +79,6 @@ public class AddVideosActivity extends AppCompatActivity {
         if(requestCode == 100 && resultCode == RESULT_OK)
         {
             selectedUri = data.getData();
-
             VideoListItemModel Entry = new VideoListItemModel(selectedUri.toString(), "312");
             videoArray.add(Entry);
             customAdapter.notifyDataSetChanged();
@@ -80,7 +87,42 @@ public class AddVideosActivity extends AppCompatActivity {
     }
 
     public void btnConvertVideos(View view) {
-        ArrayList<String> realVideoPaths = new ArrayList<>();
+            prepareVideoArray();
+            Intent i = new Intent(this, ProgressBarActivity.class);
+            Bundle b = new Bundle();
+            b.putParcelableArrayList("productionList",productionVideoModelArrayList);
+            i.putExtras(b);
+            this.startActivity(i);
+            this.startActivity(i);
+        }
+
+    private void prepareVideoArray() {
+        //get shortest duration.
+        Double shortestDuration = getShortestDuration();
+        int counter = 0;
+        File folder = new File(Environment.getExternalStorageDirectory() + "/TempProductionVideos");
+        if(!folder.exists()){
+            folder.mkdir();
+        }
+        String fileExt = ".mp4";
+        for(VideoListItemModel video : videoArray)
+        {
+            counter++;
+
+            String videoName = "Screen " + Integer.toString(counter);
+            String videoPath = video.getName();
+            Uri videoUri = Uri.parse(videoPath);
+            String realVideoPath = getRealPathFromUri(getApplicationContext(), videoUri);
+            Double startTime = (double) (Integer.parseInt(video.getStartTime())) / 1000;
+            Double duration = (startTime + shortestDuration) / 1000;
+            File dest = new File(folder, videoName+fileExt);
+            String[] Command  = new String[] {"-ss",""+startTime,"-y","-i",realVideoPath,"-t",""+duration,"-vcodec","mpeg4","-b:v","2097152","-b:a","48000","-ac","2","-ar","22050",dest.getAbsolutePath()};
+            ProductionVideoModel pvm = new ProductionVideoModel(Command, duration);
+            productionVideoModelArrayList.add(pvm);
+        }
+    }
+
+    private Double getShortestDuration() {
         ArrayList<Integer> durations = new ArrayList<>();
         if(videoArray != null) {
             for (VideoListItemModel video : videoArray) {
@@ -96,28 +138,11 @@ public class AddVideosActivity extends AppCompatActivity {
                 retriever.release();
             }
             Collections.sort(durations);
-            int endVideoDuration = durations.get(0);
-            int counter = 0;
-            File folder = new File(Environment.getExternalStorageDirectory() + "/TempProductionVideos");
-            if(!folder.exists()){
-                folder.mkdir();
-            }
-            String fileExt = ".mp4";
-            for(VideoListItemModel video : videoArray)
-            {
-                counter++;
-                String videoName = "Screen " + counter;
-                String videoPath = video.getName();
-                Uri videoUri = Uri.parse(videoPath);
-                String realVideoPath = getRealPathFromUri(getApplicationContext(), videoUri);
-                int startTime = Integer.parseInt(video.getStartTime());
-                int duration = startTime + endVideoDuration;
-                File dest = new File(folder, videoName+fileExt);
-                String[] Command  = new String[] {"-ss",""+startTime,"-y","-i",realVideoPath,"-t",""+duration,"-vcodec","mpeg4","-b:v","2097152","-b:a","48000","-ac","2","-ar","22050",dest.getAbsolutePath()};
-                ProductionVideoModel pvm = new ProductionVideoModel(Command, duration);
-                productionVideoModelArrayList.add(pvm);
-            }
+
         }
+        Double returnDouble = (double) durations.get(0);
+        return returnDouble;
+
     }
     private String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
