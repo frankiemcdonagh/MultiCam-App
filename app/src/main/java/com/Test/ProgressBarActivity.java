@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class ProgressBarActivity extends AppCompatActivity {
     CircleProgressBar circleProgressBar;
     ArrayList<ProductionVideoModel> productionVideoModelArrayList = new ArrayList<>();
+    ArrayList<ServiceConnection> connections = new ArrayList<>();
     int[] progressValues = new int[0];
 
     @Override
@@ -26,6 +27,15 @@ public class ProgressBarActivity extends AppCompatActivity {
 
         prepareProgressBar();
         processProductionVideos();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        for (ServiceConnection c : connections) {
+            getApplicationContext().unbindService(c);
+        }
     }
 
     private void prepareProgressBar(){
@@ -64,7 +74,7 @@ public class ProgressBarActivity extends AppCompatActivity {
             android.os.Debug.waitForDebugger();
             startService(myIntent);
 
-            ServiceConnection conn = new ServiceConnection() {
+            final ServiceConnection conn = new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName name, IBinder iBinder) {
                     android.os.Debug.waitForDebugger();
@@ -100,6 +110,7 @@ public class ProgressBarActivity extends AppCompatActivity {
 
                 }
             };
+            connections.add(conn);
 
             getApplicationContext().bindService(myIntent, conn, Context.BIND_AUTO_CREATE);
         }

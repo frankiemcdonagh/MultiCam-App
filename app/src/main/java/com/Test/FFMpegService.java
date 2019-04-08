@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
@@ -16,7 +17,7 @@ import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedExceptio
 
 public class FFMpegService extends Service {
     FFmpeg ffMpeg;
-    int duration;
+    Double duration;
     String[] command;
     Callbacks activity;
 
@@ -30,7 +31,7 @@ public class FFMpegService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(intent!=null){
-            duration = Integer.parseInt(intent.getStringExtra("duration"));
+            duration = Double.parseDouble(intent.getStringExtra("duration"));
             command = intent.getStringArrayExtra("command");
             try {
                 LoadFFMpegBinary();
@@ -49,6 +50,7 @@ public class FFMpegService extends Service {
             @Override
             public void onFailure(String message) {
                 super.onFailure(message);
+                Log.i("FFMpeg command failed:",message);
             }
 
             @Override
@@ -71,9 +73,8 @@ public class FFMpegService extends Service {
                     int min = Integer.parseInt(abikamha[1]);
                     float sec = Float.valueOf(seconds);
                     float timeInSec = hours+min+sec;
-
-                    percentage.setValue((int)((timeInSec/duration)*1000));
-
+                    int progress = (int)((timeInSec/duration)*100);
+                    percentage.setValue(progress);
                 }
             }
 
@@ -103,30 +104,28 @@ public class FFMpegService extends Service {
     }
 
     private void LoadFFMpegBinary() throws FFmpegNotSupportedException {
-        if(ffMpeg == null)
-        {
-            ffMpeg = FFmpeg.getInstance(this);
+        if(ffMpeg != null) { return; }
 
-        }
+        ffMpeg = FFmpeg.getInstance(this);
         ffMpeg.loadBinary(new FFmpegLoadBinaryResponseHandler() {
             @Override
             public void onFailure() {
-
+                Log.i("FFMpeg binary", "Failed to load binary");
             }
 
             @Override
             public void onSuccess() {
-
+                Log.i("FFMpeg binary", "Successfully loaded binary");
             }
 
             @Override
             public void onStart() {
-
+                Log.i("FFMpeg binary", "Started to load binary");
             }
 
             @Override
             public void onFinish() {
-
+                Log.i("FFMpeg binary", "Finished to load binary");
             }
         });
     }

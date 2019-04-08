@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -41,6 +42,11 @@ public class AddVideosActivity extends AppCompatActivity
         customAdapter = new CustomAdapter(this, R.layout.addvideo_item, videoArray);
         videoList.setAdapter(customAdapter);
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
     }
 
     public void fillList(){
@@ -87,12 +93,12 @@ public class AddVideosActivity extends AppCompatActivity
     }
 
     public void btnConvertVideos(View view) {
+            productionVideoModelArrayList.clear();
             prepareVideoArray();
             Intent i = new Intent(this, ProgressBarActivity.class);
             Bundle b = new Bundle();
             b.putParcelableArrayList("productionList",productionVideoModelArrayList);
             i.putExtras(b);
-            this.startActivity(i);
             this.startActivity(i);
         }
 
@@ -113,8 +119,11 @@ public class AddVideosActivity extends AppCompatActivity
             String videoPath = video.getName();
             Uri videoUri = Uri.parse(videoPath);
             String realVideoPath = getRealPathFromUri(getApplicationContext(), videoUri);
-            Double startTime = (double) (Integer.parseInt(video.getStartTime())) / 1000;
+            DecimalFormat df = new DecimalFormat(".##");
+            Double startTime = (double)(Integer.parseInt(video.getStartTime())) / 1000;
+            startTime = Double.parseDouble(df.format(startTime));
             Double duration = (startTime + shortestDuration) / 1000;
+            duration = Double.parseDouble(df.format(duration));
             File dest = new File(folder, videoName+fileExt);
             String[] Command  = new String[] {"-ss",""+startTime,"-y","-i",realVideoPath,"-t",""+duration,"-vcodec","mpeg4","-b:v","2097152","-b:a","48000","-ac","2","-ar","22050",dest.getAbsolutePath()};
             ProductionVideoModel pvm = new ProductionVideoModel(Command, duration);
