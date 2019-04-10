@@ -95,12 +95,27 @@ public class AddVideosActivity extends AppCompatActivity
     public void btnConvertVideos(View view) {
             productionVideoModelArrayList.clear();
             prepareVideoArray();
+            DeleteOldProductionVideos();
             Intent i = new Intent(this, ProgressBarActivity.class);
             Bundle b = new Bundle();
             b.putParcelableArrayList("productionList",productionVideoModelArrayList);
             i.putExtras(b);
             this.startActivity(i);
         }
+
+    private void DeleteOldProductionVideos() {
+        //get the production folder
+        File dir = new File(Environment.getExternalStorageDirectory()+"TempProductionVideos");
+        //delete children
+        if (dir.isDirectory())
+        {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++)
+            {
+                new File(dir, children[i]).delete();
+            }
+        }
+    }
 
     private void prepareVideoArray() {
         //get shortest duration.

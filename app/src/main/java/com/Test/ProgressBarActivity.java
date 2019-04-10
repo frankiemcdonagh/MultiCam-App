@@ -71,7 +71,7 @@ public class ProgressBarActivity extends AppCompatActivity {
             ProductionVideoModel pvm = productionVideoModelArrayList.get(counter);
             final int position = counter;
             final Intent myIntent = createServiceIntent(pvm);
-            android.os.Debug.waitForDebugger();
+
             startService(myIntent);
 
             final ServiceConnection conn = new ServiceConnection() {
@@ -113,6 +113,7 @@ public class ProgressBarActivity extends AppCompatActivity {
             connections.add(conn);
 
             getApplicationContext().bindService(myIntent, conn, Context.BIND_AUTO_CREATE);
+
         }
     }
 

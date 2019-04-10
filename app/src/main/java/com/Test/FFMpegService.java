@@ -38,7 +38,8 @@ public class FFMpegService extends Service {
                 executeFFmpegCommand();
             } catch (FFmpegNotSupportedException e) {
                 e.printStackTrace();
-            } catch (FFmpegCommandAlreadyRunningException e) {
+            }
+            catch (FFmpegCommandAlreadyRunningException e) {
                 e.printStackTrace();
             }
         }

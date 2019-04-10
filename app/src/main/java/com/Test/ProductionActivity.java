@@ -33,14 +33,26 @@ public class ProductionActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
+
         ListView list = findViewById(R.id.listViewVideos);
         final VideoView videoView = findViewById(R.id.videoViewPlayer);
         MediaController mediaController = new MediaController(this);
         videoView.setMediaController(mediaController);
         mediaController.setAnchorView(videoView);
         final ArrayList<String> varray = new ArrayList<>();
-        varray.add("video1.mp4");
-        varray.add("video2.mp4");
+        String path = Environment.getExternalStorageDirectory().toString()+"/TempProductionVideos";
+        Log.d("Files", "Path: " + path);
+        File f = new File(path);
+        File file[] = f.listFiles();
+        Log.d("Files", "Size: "+ file.length);
+        for (int i=0; i < file.length; i++)
+        {
+            //here populate your listview
+            Log.d("Files", "FileName:" + file[i].getName());
+            varray.add(file[i].toString());
+        }
         final ArrayList<String> RecordedChanges = new ArrayList<>();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, varray);
         list.setAdapter(arrayAdapter);
@@ -48,39 +60,17 @@ public class ProductionActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String videoposition = varray.get(position);
-                if(videoposition.equals("video1.mp4")){
+                    String videoposition = varray.get(position);
 
                     currentposition = videoView.getCurrentPosition();
-                    RecordedChanges.add("video1" + " - " + currentposition);
-                    Log.d("ChangesList",RecordedChanges.toString());
-                    String videopath = "android.resource://" + getPackageName() + "/" + R.raw.video1;
+                    RecordedChanges.add(videoposition + " - " + currentposition);
+                    Log.d("ChangesList", RecordedChanges.toString());
 
-                    Uri uri = Uri.parse(videopath);
+                    Uri uri = Uri.parse(videoposition);
                     videoView.setVideoURI(uri);
                     videoView.pause();
                     videoView.seekTo(currentposition);
                     videoView.start();
-
-
-
-                }
-                else{
-                    currentposition = videoView.getCurrentPosition();
-                    RecordedChanges.add("video2" + " - " + currentposition);
-                    Log.d("ChangesList",RecordedChanges.toString());
-                    String videopath = "android.resource://" + getPackageName() + "/" + R.raw.video2;
-
-                    Uri uri = Uri.parse(videopath);
-                    videoView.setVideoURI(uri);
-                    videoView.pause();
-                    videoView.seekTo(currentposition);
-                    videoView.start();
-
-
-
-                }
-
 
             }
         });
