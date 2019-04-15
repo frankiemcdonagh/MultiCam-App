@@ -5,6 +5,7 @@ import android.app.Service;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -15,10 +16,13 @@ import com.github.hiteshsondhi88.libffmpeg.FFmpegLoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 
+import java.util.ArrayList;
+
 public class FFMpegService extends Service {
     FFmpeg ffMpeg;
-    Double duration;
-    String[] command;
+
+    ArrayList<ProductionVideoModel> productionVideoModelArrayList = new ArrayList<>();
+    int[] progressValues = new int[0];
     Callbacks activity;
 
     public MutableLiveData<Integer> percentage;
@@ -31,22 +35,29 @@ public class FFMpegService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(intent!=null){
-            duration = Double.parseDouble(intent.getStringExtra("duration"));
-            command = intent.getStringArrayExtra("command");
-            try {
-                LoadFFMpegBinary();
-                executeFFmpegCommand();
-            } catch (FFmpegNotSupportedException e) {
-                e.printStackTrace();
+            Bundle bundle = intent.getExtras();
+            if(bundle != null) {
+                productionVideoModelArrayList = bundle.getParcelableArrayList("productionList");
+                progressValues = new int[productionVideoModelArrayList.size()];
             }
-            catch (FFmpegCommandAlreadyRunningException e) {
-                e.printStackTrace();
+            for(int counter = 0; counter < productionVideoModelArrayList.size(); counter++) {
+                ProductionVideoModel pvm = productionVideoModelArrayList.get(counter);
+                String[] command = pvm.getCommand();
+                Double duration = pvm.getDuration();
+                try {
+                    LoadFFMpegBinary();
+                    executeFFmpegCommand(command, duration, counter);
+                } catch (FFmpegNotSupportedException e) {
+                    e.printStackTrace();
+                } catch (FFmpegCommandAlreadyRunningException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void executeFFmpegCommand() throws FFmpegCommandAlreadyRunningException {
+    private void executeFFmpegCommand(String[] command, final Double duration, final int counter) throws FFmpegCommandAlreadyRunningException {
         ffMpeg.execute(command, new ExecuteBinaryResponseHandler(){
             @Override
             public void onFailure(String message) {
@@ -75,7 +86,8 @@ public class FFMpegService extends Service {
                     float sec = Float.valueOf(seconds);
                     float timeInSec = hours+min+sec;
                     int progress = (int)((timeInSec/duration)*100);
-                    percentage.setValue(progress);
+                    progressValues[counter] = progress;
+                    percentage.setValue(getTotalProgressValue());
                 }
             }
 
@@ -86,11 +98,19 @@ public class FFMpegService extends Service {
 
             @Override
             public void onFinish() {
-                percentage.setValue(100);
+
             }
         });
 
 
+    }
+    private int getTotalProgressValue(){
+        int total = 0;
+        for (int progressValue : progressValues) {
+            total += progressValue;
+        }
+
+        return total / progressValues.length;
     }
 
     @Override

@@ -1,8 +1,13 @@
 package com.Test;
 
+import android.content.DialogInterface;
+import android.icu.text.AlphabeticIndex;
+import android.media.MediaMetadataRetriever;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,11 +26,16 @@ import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunnin
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ProductionActivity extends AppCompatActivity {
 
     public int currentposition;
+    public VideoView videoView;
+    final ArrayList<String> RecorderPaths = new ArrayList<>();
+    final ArrayList<Integer> RecordedStartTimes = new ArrayList<>();
+    ArrayList<ProductionVideoModel> productionVideoModelArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +47,7 @@ public class ProductionActivity extends AppCompatActivity {
 
 
         ListView list = findViewById(R.id.listViewVideos);
-        final VideoView videoView = findViewById(R.id.videoViewPlayer);
-        MediaController mediaController = new MediaController(this);
-        videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(videoView);
+        videoView = findViewById(R.id.videoViewPlayer);
         final ArrayList<String> varray = new ArrayList<>();
         String path = Environment.getExternalStorageDirectory().toString()+"/TempProductionVideos";
         Log.d("Files", "Path: " + path);
@@ -53,20 +60,19 @@ public class ProductionActivity extends AppCompatActivity {
             Log.d("Files", "FileName:" + file[i].getName());
             varray.add(file[i].toString());
         }
-        final ArrayList<String> RecordedChanges = new ArrayList<>();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, varray);
         list.setAdapter(arrayAdapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String videoposition = varray.get(position);
+                    String videopath = varray.get(position);
 
                     currentposition = videoView.getCurrentPosition();
-                    RecordedChanges.add(videoposition + " - " + currentposition);
-                    Log.d("ChangesList", RecordedChanges.toString());
+                    RecordedStartTimes.add(currentposition);
+                    RecorderPaths.add(videopath);
 
-                    Uri uri = Uri.parse(videoposition);
+                    Uri uri = Uri.parse(videopath);
                     videoView.setVideoURI(uri);
                     videoView.pause();
                     videoView.seekTo(currentposition);
@@ -75,8 +81,80 @@ public class ProductionActivity extends AppCompatActivity {
             }
         });
 
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                openDialog();
+            }
+        });
+
+
     }
 
+    private void openDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Times Saved")
+                .setMessage("Do you want to continue?")
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        videoView.seekTo(0);
+                        videoView.pause();
+                        videoView.setVideoURI(null);
+                        RecordedStartTimes.clear();
+                        RecorderPaths.clear();
+                    }
+                })
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        prepareArray();
+                        goToNextPage();
+                    }
+
+                    private void prepareArray() {
+                        ArrayList<String> commands = new ArrayList<>();
+                        File folder = new File(Environment.getExternalStorageDirectory() + "/TempSelectionVideos");
+                        if(!folder.exists()){
+                            folder.mkdir();
+                        }
+                        for(int i = 0; i < RecordedStartTimes.size(); i++){
+                            String videoName = "Selection "+ i ;
+                            String fileExt = ".mp4";
+                            int startTime;
+                            int duration;
+                            startTime = RecordedStartTimes.get(i);
+                            int i2 = i+1;
+                            try{
+                                duration = RecordedStartTimes.get(i2) - startTime;
+                            }
+                            catch (Exception e) {
+                                Uri videoUri = Uri.parse(RecorderPaths.get(i));
+                                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                                retriever.setDataSource(getApplicationContext(), videoUri);
+                                String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                                int timeInMillisec = Integer.parseInt(time);
+                                duration = timeInMillisec - startTime;
+                                retriever.release();
+                            }
+                            DecimalFormat df = new DecimalFormat(".##");
+                            double DoubleStartTime = (double)(startTime) / 1000;
+                            DoubleStartTime = Double.parseDouble(df.format(DoubleStartTime));
+                            Double DoubleDuration = (double) duration / 1000;
+                            DoubleDuration = Double.parseDouble(df.format(DoubleDuration));
+                            File dest = new File(folder, videoName+fileExt);
+                            String[] Command  = new String[] {"-ss",""+DoubleStartTime,"-y","-i",RecorderPaths.get(i),"-t",""+DoubleDuration,"-vcodec","mpeg4","-b:v","2097152","-b:a","48000","-ac","2","-ar","22050",dest.getAbsolutePath()};
+                            ProductionVideoModel pvm = new ProductionVideoModel(Command, DoubleDuration);
+                            productionVideoModelArrayList.add(pvm);
+
+                        }
+                    }
+                    private void goToNextPage() {
+                        
+                    }
+                }).create().show();
+
+
+    }
 
 
 }

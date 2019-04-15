@@ -60,11 +60,11 @@ public class AddVideosActivity extends AppCompatActivity
         if(mainVideo != null){
             for(VideoListItemModel video : newArray)
             {
-                //Todo: Set start time not working.
                 if(mainVideo.equals(video.getName())){
                     video.setStartTime(startTime);
                     break;
                 }
+
             }
         }
         if(newArray != null) videoArray.addAll(newArray);
@@ -85,7 +85,7 @@ public class AddVideosActivity extends AppCompatActivity
         if(requestCode == 100 && resultCode == RESULT_OK)
         {
             selectedUri = data.getData();
-            VideoListItemModel Entry = new VideoListItemModel(selectedUri.toString(), "312");
+            VideoListItemModel Entry = new VideoListItemModel(selectedUri.toString(), "0");
             videoArray.add(Entry);
             customAdapter.notifyDataSetChanged();
 

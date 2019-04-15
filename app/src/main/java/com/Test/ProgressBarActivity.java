@@ -53,76 +53,48 @@ public class ProgressBarActivity extends AppCompatActivity {
         }
     }
 
-    private Intent createServiceIntent(ProductionVideoModel pvm){
-        String[] command = pvm.getCommand();
-        Double duration = pvm.getDuration();
+    private Intent createServiceIntent(){
 
         Intent myIntent = new Intent(ProgressBarActivity.this,FFMpegService.class);
-        myIntent.putExtra("duration",String.valueOf(duration));
-        myIntent.putExtra("command",command);
+
+        Bundle b = new Bundle();
+        b.putParcelableArrayList("productionList",productionVideoModelArrayList);
+        myIntent.putExtras(b);
         //myIntent.putExtra("destination", path);
 
         return myIntent;
     }
 
     private void processProductionVideos(){
-        for(int counter = 0; counter < productionVideoModelArrayList.size(); counter++)
-        {
-            ProductionVideoModel pvm = productionVideoModelArrayList.get(counter);
-            final int position = counter;
-            final Intent myIntent = createServiceIntent(pvm);
+        final Intent myIntent = createServiceIntent();
+        startService(myIntent);
 
-            startService(myIntent);
-
-            final ServiceConnection conn = new ServiceConnection() {
-                @Override
-                public void onServiceConnected(ComponentName name, IBinder iBinder) {
-                    android.os.Debug.waitForDebugger();
-                    FFMpegService.LocalBinder binder = (FFMpegService.LocalBinder)iBinder;
-                    FFMpegService service = binder.getServiceInstance();
-                    service.registerClient(getParent());
-
-                    final Observer<Integer> resultObserver = new Observer<Integer>() {
-                        @Override
-                        public void onChanged(@Nullable Integer integer) {
-                            if(integer == null) {return;}
-
-                            progressValues[position] = integer;
-
-                            if(integer==100){
-                                stopService(myIntent);
-                                Toast.makeText(getApplicationContext(),"SINGLE JOB DONE",Toast.LENGTH_LONG).show();
-                            }
-                            int currentTotal = getTotalProgressValue();
-                            if(currentTotal < 100){
-                                circleProgressBar.setProgress(currentTotal);
-                            } else if(currentTotal == 100) {
-                                Toast.makeText(getApplicationContext(),"ALL JOBS DONE",Toast.LENGTH_LONG).show();
-                            }
-
+        final ServiceConnection conn = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder iBinder) {
+                FFMpegService.LocalBinder binder = (FFMpegService.LocalBinder)iBinder;
+                FFMpegService service = binder.getServiceInstance();
+                service.registerClient(getParent());
+                final Observer<Integer> resultObserver = new Observer<Integer>() {
+                    @Override
+                    public void onChanged(@Nullable Integer integer) {
+                        if(integer < 100){
+                            circleProgressBar.setProgress(integer);
                         }
-                    };
-                    service.getPercentages().observe(ProgressBarActivity.this,resultObserver);
-                }
-
-                @Override
-                public void onServiceDisconnected(ComponentName name) {
-
-                }
-            };
-            connections.add(conn);
-
-            getApplicationContext().bindService(myIntent, conn, Context.BIND_AUTO_CREATE);
-
-        }
-    }
-
-    private int getTotalProgressValue(){
-        int total = 0;
-        for (int progressValue : progressValues) {
-            total += progressValue;
-        }
-
-        return total / progressValues.length;
+                        if(integer==100){
+                            circleProgressBar.setProgress(integer);
+                            stopService(myIntent);
+                            Toast.makeText(getApplicationContext(), "Videos Trimmed Successfully", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                };
+                service.getPercentages().observe(ProgressBarActivity.this,resultObserver);
+            }
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+            }
+        };
+        connections.add(conn);
+        getApplicationContext().bindService(myIntent, conn, Context.BIND_AUTO_CREATE);
     }
 }

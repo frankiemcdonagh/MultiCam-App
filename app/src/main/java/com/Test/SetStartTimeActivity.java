@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.VideoView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class SetStartTimeActivity extends AppCompatActivity {
@@ -66,8 +67,11 @@ public class SetStartTimeActivity extends AppCompatActivity {
             int intStartTime = Integer.parseInt(time);
             sum += intStartTime;
         }
+        //DecimalFormat df = new DecimalFormat("#.##")        average = sum/counter;
+        //average = average/1000;
         average = sum/counter;
         String stringAverage = Integer.toString(average);
+        //stringAverage = df.format(stringAverage);
         Intent i = new Intent(this, AddVideosActivity.class);
         i.putExtra("VideoPath", videoPath);
         i.putExtra("Average Time", stringAverage);
