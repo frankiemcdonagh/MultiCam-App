@@ -1,6 +1,7 @@
 package com.Test;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.text.AlphabeticIndex;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
@@ -107,6 +108,7 @@ public class ProductionActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        productionVideoModelArrayList.clear();
                         prepareArray();
                         goToNextPage();
                     }
@@ -149,7 +151,11 @@ public class ProductionActivity extends AppCompatActivity {
                         }
                     }
                     private void goToNextPage() {
-                        
+                        Intent i = new Intent(ProductionActivity.this, ProgressBarConcatActivity.class);
+                        Bundle b = new Bundle();
+                        b.putParcelableArrayList("videoSelections",productionVideoModelArrayList);
+                        i.putExtras(b);
+                        ProductionActivity.this.startActivity(i);
                     }
                 }).create().show();
 

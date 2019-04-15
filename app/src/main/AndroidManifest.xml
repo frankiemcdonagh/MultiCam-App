@@ -4,23 +4,30 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:configChanges="orientation|screenSize"
         android:allowBackup="true"
+        android:configChanges="orientation|screenSize"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProgressBarActivity" android:screenOrientation="landscape"></activity>
-        <activity android:name=".SetStartTimeActivity" android:screenOrientation="landscape"></activity>
-        <activity android:name=".AddVideosActivity" android:screenOrientation="landscape" />
+        <activity android:name=".ProgressBarConcatActivity"></activity>
+        <activity
+            android:name=".ProgressBarActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".SetStartTimeActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".AddVideosActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="landscape"
             android:label="@string/title_activity_main"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,11 +38,13 @@
         <activity
             android:name=".ProductionActivity"
             android:label="@string/title_activity_production"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <service
             android:name=".FFMpegService"
             android:enabled="true" />
+        <service android:name=".TrimAndConcatService" android:enabled="true"/>
     </application>
 
 </manifest>
