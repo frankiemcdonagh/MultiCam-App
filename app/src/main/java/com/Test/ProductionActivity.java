@@ -165,7 +165,7 @@ public class ProductionActivity extends AppCompatActivity {
 
     private void DeleteOldSelections() {
         //get the production folder
-        File dir = new File(Environment.getExternalStorageDirectory()+"TempSelectionVideos");
+        File dir = new File(Environment.getExternalStorageDirectory()+"/TempSelectionVideos");
         //delete children
         if (dir.isDirectory())
         {

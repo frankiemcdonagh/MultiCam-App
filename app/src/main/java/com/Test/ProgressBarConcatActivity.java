@@ -56,9 +56,15 @@ public class ProgressBarConcatActivity extends AppCompatActivity {
                         if(integer < 100){
                             circleProgressBar.setProgress(integer);
                         }
+                        if(integer==50)
+                        {
+                            Toast.makeText(getApplicationContext(), "merging videos please wait.", Toast.LENGTH_LONG).show();
+                        }
                         if(integer==100){
                             circleProgressBar.setProgress(integer);
                             stopService(myIntent);
+                            Intent i = new Intent(ProgressBarConcatActivity.this, MainActivity.class);
+                            startActivity(i);
                         }
                     }
                 };

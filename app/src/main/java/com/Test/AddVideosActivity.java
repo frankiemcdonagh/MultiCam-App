@@ -105,7 +105,7 @@ public class AddVideosActivity extends AppCompatActivity
 
     private void DeleteOldProductionVideos() {
         //get the production folder
-        File dir = new File(Environment.getExternalStorageDirectory()+"TempProductionVideos");
+        File dir = new File(Environment.getExternalStorageDirectory()+"/TempProductionVideos");
         //delete children
         if (dir.isDirectory())
         {
