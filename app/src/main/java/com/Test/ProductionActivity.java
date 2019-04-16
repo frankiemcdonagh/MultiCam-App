@@ -43,7 +43,7 @@ public class ProductionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_production);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        DeleteOldSelections();
 
 
 

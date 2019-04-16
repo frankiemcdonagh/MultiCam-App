@@ -176,7 +176,7 @@ public class TrimAndConcatService extends Service {
         ffMpeg.execute(command, new ExecuteBinaryResponseHandler(){
             @Override
             public void onFailure(String message) {
-                super.onFailure(message);
+
                 Log.i("Concat command failed:",message);
             }
 

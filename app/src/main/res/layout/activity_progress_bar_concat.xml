@@ -9,7 +9,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
-        app:progress_end_color="@android:color/transparent"
         app:progress_stroke_width="10dp"
         app:progress_text_color="#fff"
         android:layout_centerInParent="true"

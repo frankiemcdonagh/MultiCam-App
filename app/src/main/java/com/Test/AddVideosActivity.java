@@ -140,7 +140,7 @@ public class AddVideosActivity extends AppCompatActivity
             Double duration = (startTime + shortestDuration) / 1000;
             duration = Double.parseDouble(df.format(duration));
             File dest = new File(folder, videoName+fileExt);
-            String[] Command  = new String[] {"-ss",""+startTime,"-y","-i",realVideoPath,"-t",""+duration,"-vcodec","mpeg4","-b:v","2097152","-b:a","48000","-ac","2","-ar","22050",dest.getAbsolutePath()};
+            String[] Command  = new String[] {"-ss",""+startTime,"-y","-i",realVideoPath,"-t",""+duration,"-vcodec","mpeg4","-b:v","2097152","-b:a","48000","-ac","2","-ar","22050","-vf","scale=1280x720",dest.getAbsolutePath()};
             ProductionVideoModel pvm = new ProductionVideoModel(Command, duration);
             productionVideoModelArrayList.add(pvm);
         }
