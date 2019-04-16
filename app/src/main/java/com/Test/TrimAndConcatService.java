@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -16,11 +17,15 @@ import com.github.hiteshsondhi88.libffmpeg.FFmpegLoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 
+
+import java.io.File;
 import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.Random;
+
 
 public class TrimAndConcatService extends Service {
     FFmpeg ffMpeg;
+    FFmpeg fFmpegConcat;
 
     ArrayList<ProductionVideoModel> productionVideoModelArrayList = new ArrayList<>();
     int[] progressValues = new int[0];
@@ -35,7 +40,9 @@ public class TrimAndConcatService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         if(intent!=null){
+
             Bundle bundle = intent.getExtras();
             if(bundle != null) {
                 productionVideoModelArrayList = bundle.getParcelableArrayList("videoSelections");
@@ -58,7 +65,7 @@ public class TrimAndConcatService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void executeFFmpegCommand(String[] command, final Double duration, final int counter) throws FFmpegCommandAlreadyRunningException {
+    private void executeFFmpegCommand(final String[] command, final Double duration, final int counter) throws FFmpegCommandAlreadyRunningException {
         ffMpeg.execute(command, new ExecuteBinaryResponseHandler(){
             @Override
             public void onFailure(String message) {
@@ -74,6 +81,7 @@ public class TrimAndConcatService extends Service {
             @Override
             public void onProgress(String message) {
                 String[] arr;
+
                 if(message.contains("time=")){
                     arr = message.split("time=");
                     String yalo = arr[1];
@@ -99,7 +107,100 @@ public class TrimAndConcatService extends Service {
 
             @Override
             public void onFinish() {
+                if(percentage.getValue() != null && percentage.getValue() == 50){
+                    try {
+                        File Destination = CreateDestination();
+                        String[] Command = GetConcatCommand(Destination);
+                        ExecuteFFmpegConcat(Command);
+                    } catch (FFmpegCommandAlreadyRunningException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
+
+    }
+
+    private File CreateDestination() {
+        File folder = new File(Environment.getExternalStorageDirectory() + "/ConcatVideos");
+        if(!folder.exists()){
+            folder.mkdir();
+        }
+        String fileExt = ".mp4";
+        Random r = new Random();
+        int randomInt =  r.nextInt((1000 - 1) + 1) + 1;
+        String videoName = "concatVideo" + randomInt;
+        return new File(folder, videoName+fileExt);
+    }
+
+    private String[] GetConcatCommand(File Destination) {
+        final ArrayList<String> paths = new ArrayList<>();
+        final ArrayList<String> commandList = new ArrayList<>();
+        String path = Environment.getExternalStorageDirectory().toString()+"/TempSelectionVideos";
+        File f = new File(path);
+        File file[] = f.listFiles();
+        for (int i=0; i < file.length; i++)
+        {
+            paths.add(file[i].toString());
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < paths.size(); i++)
+        {
+            commandList.add("-i");
+            commandList.add(paths.get(i));
+
+            sb.append("[").append(i).append(":0] [").append(i).append(":1]");
+        }
+        sb.append(" concat=n=").append(paths.size()).append(":v=1:a=1 [v] [a]");
+        commandList.add("-filter_complex");
+        commandList.add(sb.toString());
+        commandList.add("-map");
+        commandList.add("[v]");
+        commandList.add("-map");
+        commandList.add("[a]");
+        commandList.add("-preset");
+        commandList.add("ultrafast");
+        commandList.add(Destination.toString());
+
+        sb = new StringBuilder();
+        for (String str : commandList)
+        {
+            sb.append(str).append(" ");
+        }
+
+        return commandList.toArray(new String[commandList.size()]);
+    }
+
+    private void ExecuteFFmpegConcat(String[] command) throws FFmpegCommandAlreadyRunningException {
+        ffMpeg.execute(command, new ExecuteBinaryResponseHandler(){
+            @Override
+            public void onFailure(String message) {
+                super.onFailure(message);
+                Log.i("Concat command failed:",message);
+            }
+
+            @Override
+            public void onSuccess(String message) {
+                super.onSuccess(message);
+            }
+
+            @Override
+            public void onProgress(String message) {
+                if(message.contains("Qavg:")){
+                    percentage.setValue(100);
+
+                }
+            }
+
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onFinish() {
+                percentage.setValue(100);
             }
         });
 
@@ -110,8 +211,9 @@ public class TrimAndConcatService extends Service {
         for (int progressValue : progressValues) {
             total += progressValue;
         }
-
-        return total / progressValues.length;
+        int trimTotal = total/progressValues.length;
+        trimTotal = trimTotal / 2;
+        return trimTotal;
     }
 
     @Override

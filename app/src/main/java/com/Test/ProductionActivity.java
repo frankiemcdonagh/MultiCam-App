@@ -109,6 +109,7 @@ public class ProductionActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         productionVideoModelArrayList.clear();
+                        DeleteOldSelections();
                         prepareArray();
                         goToNextPage();
                     }
@@ -160,6 +161,20 @@ public class ProductionActivity extends AppCompatActivity {
                 }).create().show();
 
 
+    }
+
+    private void DeleteOldSelections() {
+        //get the production folder
+        File dir = new File(Environment.getExternalStorageDirectory()+"TempSelectionVideos");
+        //delete children
+        if (dir.isDirectory())
+        {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++)
+            {
+                new File(dir, children[i]).delete();
+            }
+        }
     }
 
 

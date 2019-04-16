@@ -41,7 +41,7 @@ public class ProgressBarConcatActivity extends AppCompatActivity {
         }
     }
     private void TrimAndConcatVideos() {
-        final Intent myIntent = createServiceIntent();
+        final Intent myIntent = createServiceIntent(TrimAndConcatService.class);
         startService(myIntent);
 
         final ServiceConnection conn = new ServiceConnection() {
@@ -59,7 +59,6 @@ public class ProgressBarConcatActivity extends AppCompatActivity {
                         if(integer==100){
                             circleProgressBar.setProgress(integer);
                             stopService(myIntent);
-                            Toast.makeText(getApplicationContext(), "Trimmed and concat", Toast.LENGTH_LONG).show();
                         }
                     }
                 };
@@ -72,15 +71,12 @@ public class ProgressBarConcatActivity extends AppCompatActivity {
         connections.add(conn);
         getApplicationContext().bindService(myIntent, conn, Context.BIND_AUTO_CREATE);
     }
-
-    private Intent createServiceIntent() {
-        Intent myIntent = new Intent(ProgressBarConcatActivity.this,TrimAndConcatService.class);
+    private Intent createServiceIntent(Class destination) {
+        Intent myIntent = new Intent(ProgressBarConcatActivity.this,destination);
 
         Bundle b = new Bundle();
         b.putParcelableArrayList("videoSelections",productionVideoModelArrayList);
         myIntent.putExtras(b);
-        //myIntent.putExtra("destination", path);
-
         return myIntent;
     }
 }
