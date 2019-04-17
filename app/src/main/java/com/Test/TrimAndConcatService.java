@@ -187,9 +187,12 @@ public class TrimAndConcatService extends Service {
 
             @Override
             public void onProgress(String message) {
+                if(message.contains("javautil")){percentage.setValue(percentage.getValue() + 10);}
+                if(message.contains("Input #0")){percentage.setValue(percentage.getValue() + 10);}
+                if(message.contains("Output #0")){percentage.setValue(percentage.getValue() + 10);}
+                if(message.contains("Stream mapping:")){percentage.setValue(percentage.getValue() + 10);}
                 if(message.contains("Qavg:")){
                     percentage.setValue(100);
-
                 }
             }
 

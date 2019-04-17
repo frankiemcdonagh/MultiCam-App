@@ -62,9 +62,9 @@ public class ProgressBarConcatActivity extends AppCompatActivity {
                         }
                         if(integer==100){
                             circleProgressBar.setProgress(integer);
-/*                            stopService(myIntent);
+                            stopService(myIntent);
                             Intent i = new Intent(ProgressBarConcatActivity.this, MainActivity.class);
-                            startActivity(i);*/
+                            startActivity(i);
                         }
                     }
                 };
