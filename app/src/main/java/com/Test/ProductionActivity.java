@@ -34,6 +34,8 @@ public class ProductionActivity extends AppCompatActivity {
 
     public int currentposition;
     public VideoView videoView;
+    public String ClickedPath;
+    public int counter;
     final ArrayList<String> RecorderPaths = new ArrayList<>();
     final ArrayList<Integer> RecordedStartTimes = new ArrayList<>();
     ArrayList<ProductionVideoModel> productionVideoModelArrayList = new ArrayList<>();
@@ -44,6 +46,8 @@ public class ProductionActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DeleteOldSelections();
+        ClickedPath = null;
+        counter = 0;
 
 
 
@@ -67,18 +71,23 @@ public class ProductionActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(ClickedPath == null)
+                {
+                    ClickedPath = varray.get(position);
+                }
+                if(varray.get(position) != ClickedPath || counter == 0) {
+                    ClickedPath = varray.get(position);
                     String videopath = varray.get(position);
-
                     currentposition = videoView.getCurrentPosition();
                     RecordedStartTimes.add(currentposition);
                     RecorderPaths.add(videopath);
-
                     Uri uri = Uri.parse(videopath);
                     videoView.setVideoURI(uri);
                     videoView.pause();
                     videoView.seekTo(currentposition);
                     videoView.start();
-
+                }
+                counter++;
             }
         });
 
