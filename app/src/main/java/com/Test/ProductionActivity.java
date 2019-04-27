@@ -77,11 +77,10 @@ public class ProductionActivity extends AppCompatActivity {
                 }
                 if(varray.get(position) != ClickedPath || counter == 0) {
                     ClickedPath = varray.get(position);
-                    String videopath = varray.get(position);
                     currentposition = videoView.getCurrentPosition();
                     RecordedStartTimes.add(currentposition);
-                    RecorderPaths.add(videopath);
-                    Uri uri = Uri.parse(videopath);
+                    RecorderPaths.add(ClickedPath);
+                    Uri uri = Uri.parse(ClickedPath);
                     videoView.setVideoURI(uri);
                     videoView.pause();
                     videoView.seekTo(currentposition);

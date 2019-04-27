@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class SetStartTimeActivity extends AppCompatActivity {
     VideoView videoView;
-    ArrayList<String> StartTimes;
-    ArrayAdapter<String> arrayAdapter;
+    ArrayList<StartTimeModel> startTimes;
+    StartTimesAdapter startTimesAdapter;
     String videoPath;
     ArrayList<VideoListItemModel> arrayList;
     @Override
@@ -32,19 +32,18 @@ public class SetStartTimeActivity extends AppCompatActivity {
         videoView.setVideoURI(uri);
 
         //creating the list and setting the adapter so that it is dynamic
-        StartTimes = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, StartTimes);
+        startTimes = new ArrayList<>();
+        startTimesAdapter = new StartTimesAdapter(this, R.layout.add_start_time_item, startTimes);
         ListView listView = findViewById(R.id.listViewStartTimeVideos);
-        listView.setAdapter(arrayAdapter);
+        listView.setAdapter(startTimesAdapter);
     }
 
     public void btnStartTimeClick(View view) {
         //Gets the current time of video and converts to a string
         int startTimeInt = videoView.getCurrentPosition();
-        String startTime = Integer.toString(startTimeInt);
-        String listItem = startTime;
-        StartTimes.add(listItem);
-        arrayAdapter.notifyDataSetChanged();
+        StartTimeModel stm = new StartTimeModel(startTimeInt);
+        startTimes.add(stm);
+        startTimesAdapter.notifyDataSetChanged();
         videoView.seekTo(0);
         videoView.pause();
     }
@@ -61,10 +60,10 @@ public class SetStartTimeActivity extends AppCompatActivity {
         int sum = 0;
         int counter = 0;
         int average;
-        for(String time : StartTimes)
+        for(StartTimeModel time : startTimes)
         {
             counter++;
-            int intStartTime = Integer.parseInt(time);
+            int intStartTime = time.getStartTime();
             sum += intStartTime;
         }
         //DecimalFormat df = new DecimalFormat("#.##")        average = sum/counter;
