@@ -13,18 +13,28 @@
         android:id="@+id/videoList"/>
 
     <Button
+        android:padding="10dp"
+        android:layout_margin="10dp"
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:onClick="addVideo"
-        android:text="add video" />
+        android:background="@color/colorPrimary"
+        android:drawableTop="@drawable/ic_add_video_list_icon"
+        android:text=" add video "
+        android:textColor="#FFFBF4"/>
 
     <Button
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:textColor="#FFFBF4"
+        android:background="@color/colorPrimary"
+        android:drawableTop="@drawable/ic_trim_videos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:text="Convert"
+        android:text="Trim Videos"
         android:onClick="btnConvertVideos"/>
 </RelativeLayout>

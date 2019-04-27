@@ -3,13 +3,20 @@ package com.Test;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,11 +40,11 @@ public class CustomAdapter extends ArrayAdapter<VideoListItemModel> {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         //get all the information for each field
-        final String name = getItem(position).getName();
+        final String path = getItem(position).getName();
         final String startTime = getItem(position).getStartTime();
 
         //fill in the object with the information
-        final VideoListItemModel videoListItemModel = new VideoListItemModel(name, startTime);
+        final VideoListItemModel videoListItemModel = new VideoListItemModel(path, startTime);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource,parent,false);
@@ -45,18 +52,29 @@ public class CustomAdapter extends ArrayAdapter<VideoListItemModel> {
         TextView tvName = convertView.findViewById(R.id.name);
         TextView tvTime = convertView.findViewById(R.id.time);
 
+        //Image
+        final ImageView iv  = convertView.findViewById(R.id.addVideo_video_item);
+
+        Bitmap bmThumbnail;
+
+        String imagePath = getRealPathFromUri(mContext, Uri.parse(path));
+        bmThumbnail = ThumbnailUtils.createVideoThumbnail(imagePath, MediaStore.Video.Thumbnails.MINI_KIND);
+        iv.setImageBitmap(bmThumbnail);
+
+        int screenPos = position + 1;
+        String name = "Screen " + screenPos;
         tvName.setText(name);
         tvTime.setText(startTime);
 
-        ImageButton buttonAddTime = convertView.findViewById(R.id.item_addTime);
-        ImageButton buttonDelete = convertView.findViewById(R.id.item_delete);
+        Button buttonAddTime = convertView.findViewById(R.id.item_addTime);
+        Button buttonDelete = convertView.findViewById(R.id.item_delete);
 
         buttonAddTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent i = new Intent(mContext, SetStartTimeActivity.class);
-                i.putExtra("MainVideo", name);
+                i.putExtra("MainVideo", path);
                 Bundle b = new Bundle();
                 b.putParcelableArrayList("list",list);
                 i.putExtras(b);
@@ -72,5 +90,27 @@ public class CustomAdapter extends ArrayAdapter<VideoListItemModel> {
         });
 
         return convertView;
+    }
+    private String getRealPathFromUri(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        finally{
+            if(cursor!=null)
+            {
+                cursor.close();
+            }
+        }
+
     }
 }

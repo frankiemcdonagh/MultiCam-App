@@ -8,29 +8,35 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-<RelativeLayout android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    <LinearLayout android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        >
 
-    <Button
-        android:id="@+id/btnProduction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="btnProductionClick"
-        android:text="Production page" />
+        <Button
+            android:id="@+id/btnCreateProject"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/colorPrimary"
+            android:drawableTop="@drawable/ic_create_project"
+            android:onClick="btnCreateProject"
+            android:textSize="20dp"
+            android:text="New Project"
+            android:textColor="#FFFBF4"/>
+        <Button
+            android:onClick="btnPreviousProject"
+            android:textSize="20dp"
+            android:text="Previous Project"
+            android:textColor="#FFFBF4"
+            android:drawableTop="@drawable/ic_previous_project"
+            android:layout_marginStart="10dp"
+            android:id="@+id/btnPreviousProject"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="@color/colorPrimary"
 
-    <Button
-        android:id="@+id/btnAddVideos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="add videos"
-        android:layout_below="@id/btnProduction"
-        android:onClick="BtnAddVideosClick"/>
-    <Button
-        android:id="@+id/btnSetStartTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="set Start time"
-        android:layout_below="@id/btnAddVideos"
-        android:onClick="BtnSetStartTimeClick"/>
-</RelativeLayout>
+            />
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

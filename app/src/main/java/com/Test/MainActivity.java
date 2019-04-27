@@ -20,17 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void btnProductionClick(View view) {
-        Intent intent = new Intent(this, ProductionScreenActivity.class);
-        startActivity(intent);
-    }
-
-    public void BtnAddVideosClick(View view) {
+    public void btnCreateProject(View view) {
         Intent intent = new Intent(this, AddVideosActivity.class);
         startActivity(intent);
     }
-    public void BtnSetStartTimeClick(View view) {
-        Intent intent = new Intent(this, SetStartTimeActivity.class);
+
+    public void btnPreviousProject(View view) {
+        Intent intent = new Intent(this, ProductionScreenActivity.class);
         startActivity(intent);
     }
 
