@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProgressBarConcatActivity"></activity>
+
+        <activity android:name=".ProgressBarConcatActivity" />
         <activity
             android:name=".ProgressBarActivity"
             android:screenOrientation="landscape" />
@@ -36,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProductionActivity"
+            android:name=".ProductionScreenActivity"
             android:label="@string/title_activity_production"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -44,7 +45,9 @@
         <service
             android:name=".FFMpegService"
             android:enabled="true" />
-        <service android:name=".TrimAndConcatService" android:enabled="true"/>
+        <service
+            android:name=".TrimAndConcatService"
+            android:enabled="true" />
     </application>
 
 </manifest>

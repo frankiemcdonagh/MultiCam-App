@@ -85,7 +85,7 @@ public class ProgressBarActivity extends AppCompatActivity {
                             circleProgressBar.setProgress(integer);
                             stopService(myIntent);
                             Toast.makeText(getApplicationContext(), "Videos Trimmed Successfully", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(ProgressBarActivity.this, ProductionActivity.class);
+                            Intent i = new Intent(ProgressBarActivity.this, ProductionScreenActivity.class);
                             startActivity(i);
                         }
                     }

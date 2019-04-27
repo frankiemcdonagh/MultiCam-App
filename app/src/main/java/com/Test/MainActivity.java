@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnProductionClick(View view) {
-        Intent intent = new Intent(this, ProductionActivity.class);
+        Intent intent = new Intent(this, ProductionScreenActivity.class);
         startActivity(intent);
     }
 

@@ -2,35 +2,26 @@ package com.Test;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.text.AlphabeticIndex;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.MediaController;
-import android.widget.Toast;
 import android.widget.VideoView;
-
-import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
-import com.github.hiteshsondhi88.libffmpeg.FFmpegLoadBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
-import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class ProductionActivity extends AppCompatActivity {
+public class ProductionScreenActivity extends AppCompatActivity {
 
     public int currentposition;
     public VideoView videoView;
@@ -42,7 +33,7 @@ public class ProductionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_production);
+        setContentView(R.layout.activity_production_screen);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DeleteOldSelections();
@@ -161,11 +152,11 @@ public class ProductionActivity extends AppCompatActivity {
                         }
                     }
                     private void goToNextPage() {
-                        Intent i = new Intent(ProductionActivity.this, ProgressBarConcatActivity.class);
+                        Intent i = new Intent(ProductionScreenActivity.this, ProgressBarConcatActivity.class);
                         Bundle b = new Bundle();
                         b.putParcelableArrayList("videoSelections",productionVideoModelArrayList);
                         i.putExtras(b);
-                        ProductionActivity.this.startActivity(i);
+                        ProductionScreenActivity.this.startActivity(i);
                     }
                 }).create().show();
 
