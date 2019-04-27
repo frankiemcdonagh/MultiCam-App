@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 import java.io.File;
@@ -23,6 +25,9 @@ import java.util.ArrayList;
 
 public class ProductionScreenActivity extends AppCompatActivity {
 
+
+    ProductionVideoAdapter productionVideoAdapter;
+    ArrayList<ProductionPathModel> productionPathModels;
     public int currentposition;
     public VideoView videoView;
     public String ClickedPath;
@@ -42,9 +47,11 @@ public class ProductionScreenActivity extends AppCompatActivity {
 
 
 
+
+
         ListView list = findViewById(R.id.listViewVideos);
         videoView = findViewById(R.id.videoViewPlayer);
-        final ArrayList<String> varray = new ArrayList<>();
+        productionPathModels = new ArrayList<>();
         String path = Environment.getExternalStorageDirectory().toString()+"/TempProductionVideos";
         Log.d("Files", "Path: " + path);
         File f = new File(path);
@@ -54,20 +61,21 @@ public class ProductionScreenActivity extends AppCompatActivity {
         {
             //here populate your listview
             Log.d("Files", "FileName:" + file[i].getName());
-            varray.add(file[i].toString());
+            ProductionPathModel ppm = new ProductionPathModel(file[i].toString());
+            productionPathModels.add(ppm);
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, varray);
-        list.setAdapter(arrayAdapter);
+        productionVideoAdapter = new ProductionVideoAdapter(this, R.layout.production_video_item, productionPathModels);
+        list.setAdapter(productionVideoAdapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(ClickedPath == null)
                 {
-                    ClickedPath = varray.get(position);
+                    ClickedPath = productionPathModels.get(position).getPath();
                 }
-                if(varray.get(position) != ClickedPath || counter == 0) {
-                    ClickedPath = varray.get(position);
+                if(productionPathModels.get(position).getPath() != ClickedPath || counter == 0) {
+                    ClickedPath = productionPathModels.get(position).getPath();
                     currentposition = videoView.getCurrentPosition();
                     RecordedStartTimes.add(currentposition);
                     RecorderPaths.add(ClickedPath);
@@ -76,7 +84,9 @@ public class ProductionScreenActivity extends AppCompatActivity {
                     videoView.pause();
                     videoView.seekTo(currentposition);
                     videoView.start();
+
                 }
+
                 counter++;
             }
         });
@@ -176,6 +186,7 @@ public class ProductionScreenActivity extends AppCompatActivity {
             }
         }
     }
+
 
 
 }
