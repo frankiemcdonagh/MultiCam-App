@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -34,7 +35,7 @@ public class StartTimesAdapter extends ArrayAdapter<StartTimeModel> {
         TextView tv = convertView.findViewById(R.id.startTimeAv);
         tv.setText(name);
 
-        ImageButton buttonDelete = convertView.findViewById(R.id.item_deleteStartTime);
+        Button buttonDelete = convertView.findViewById(R.id.item_deleteStartTime);
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override

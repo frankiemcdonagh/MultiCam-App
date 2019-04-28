@@ -42,6 +42,7 @@ public class ProductionVideoAdapter extends ArrayAdapter<ProductionPathModel> {
         Bitmap bmThumbnail;
 
         bmThumbnail = ThumbnailUtils.createVideoThumbnail(path.toString(), MediaStore.Video.Thumbnails.MINI_KIND);
+
         iv.setImageBitmap(bmThumbnail);
 
 

@@ -32,6 +32,7 @@ public class ProductionScreenActivity extends AppCompatActivity {
     public VideoView videoView;
     public String ClickedPath;
     public int counter;
+    boolean boolValue = true;
     final ArrayList<String> RecorderPaths = new ArrayList<>();
     final ArrayList<Integer> RecordedStartTimes = new ArrayList<>();
     ArrayList<ProductionVideoModel> productionVideoModelArrayList = new ArrayList<>();
@@ -39,12 +40,10 @@ public class ProductionScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_production_screen);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         DeleteOldSelections();
         ClickedPath = null;
         counter = 0;
-
+        CreateDialog();
 
 
 
@@ -70,25 +69,26 @@ public class ProductionScreenActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(ClickedPath == null)
-                {
-                    ClickedPath = productionPathModels.get(position).getPath();
-                }
-                if(productionPathModels.get(position).getPath() != ClickedPath || counter == 0) {
-                    ClickedPath = productionPathModels.get(position).getPath();
-                    currentposition = videoView.getCurrentPosition();
-                    RecordedStartTimes.add(currentposition);
-                    RecorderPaths.add(ClickedPath);
-                    Uri uri = Uri.parse(ClickedPath);
-                    videoView.setVideoURI(uri);
-                    videoView.pause();
-                    videoView.seekTo(currentposition);
-                    videoView.start();
 
-                }
+                    if (ClickedPath == null) {
+                        ClickedPath = productionPathModels.get(position).getPath();
+                    }
+                    if (productionPathModels.get(position).getPath() != ClickedPath || counter == 0) {
+                        ClickedPath = productionPathModels.get(position).getPath();
+                        currentposition = videoView.getCurrentPosition();
+                        RecordedStartTimes.add(currentposition);
+                        RecorderPaths.add(ClickedPath);
+                        Uri uri = Uri.parse(ClickedPath);
+                        videoView.setVideoURI(uri);
+                        videoView.pause();
+                        videoView.seekTo(currentposition);
+                        videoView.start();
 
-                counter++;
-            }
+
+                    }
+
+                    counter++;
+                }
         });
 
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -100,8 +100,23 @@ public class ProductionScreenActivity extends AppCompatActivity {
 
 
     }
+    private void CreateDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Production page")
+                .setMessage("select a screen from the list of videos to start.")
 
-    private void openDialog() {
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+
+
+                }).create().show();
+
+    }
+
+        private void openDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Times Saved")
                 .setMessage("Do you want to continue?")

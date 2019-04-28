@@ -7,37 +7,60 @@
 
     <VideoView
         android:id="@+id/videoViewStartTime"
-        android:layout_width="500dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"/>
+        android:layout_toEndOf="@id/listViewStartTimeVideos"
+        android:layout_marginLeft="4dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"/>
 
 
     <ListView
+
         android:id="@+id/listViewStartTimeVideos"
-        android:layout_width="150dp"
+        android:layout_marginLeft="4dp"
+        android:layout_width="144dp"
         android:layout_height="200dp"
+        android:layout_below="@id/btnSave"
+        android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"/>
 
     <Button
         android:id="@+id/btnStartTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Time"
-        android:onClick="btnStartTimeClick"/>
+        android:layout_marginTop="10dp"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:text="Add"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFFBF4"
+        android:drawableTop="@drawable/ic_add_start_time"
+        android:onClick="btnStartTimeClick"
+        android:layout_toEndOf="@id/btnPlay"
+        android:padding="4dp"/>
 
     <Button
         android:id="@+id/btnPlay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:drawableTop="@drawable/ic_play_start_time"
         android:text="Play"
-        android:layout_below="@id/btnStartTime"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFFBF4"
         android:onClick="btnPlayClick"/>
 
     <Button
         android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_marginLeft="4dp"
+        android:layout_width="144dp"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="Save Start Time"
+        android:textColor="#FFFBF4"
+        android:drawableTop="@drawable/ic_save_start_times"
         android:layout_below="@id/btnPlay"
         android:onClick="btnSaveClick"/>
 </RelativeLayout>

@@ -1,19 +1,24 @@
 package com.Test;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -34,6 +39,7 @@ public class AddVideosActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_videos);
         videoList = findViewById(R.id.videoList);
+        HelpDialog();
         //create video array.
         videoArray = new ArrayList<>();
         //filling video list if there is a bundle present.
@@ -41,6 +47,23 @@ public class AddVideosActivity extends AppCompatActivity
         //setting custom adapter and list
         customAdapter = new CustomAdapter(this, R.layout.addvideo_item, videoArray);
         videoList.setAdapter(customAdapter);
+
+    }
+
+    private void HelpDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("New Project")
+                .setMessage("Add Videos to the page")
+                .setMessage("Ensure to add start times for each video")
+
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+
+
+                }).create().show();
 
     }
 
@@ -73,6 +96,7 @@ public class AddVideosActivity extends AppCompatActivity
     public void addVideo(View v)
     {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        
         i.setType("video/*");
 
         startActivityForResult(i, 100);
@@ -93,15 +117,20 @@ public class AddVideosActivity extends AppCompatActivity
     }
 
     public void btnConvertVideos(View view) {
-            productionVideoModelArrayList.clear();
+        productionVideoModelArrayList.clear();
+        try {
             prepareVideoArray();
             DeleteOldProductionVideos();
             Intent i = new Intent(this, ProgressBarActivity.class);
             Bundle b = new Bundle();
-            b.putParcelableArrayList("productionList",productionVideoModelArrayList);
+            b.putParcelableArrayList("productionList", productionVideoModelArrayList);
             i.putExtras(b);
             this.startActivity(i);
         }
+        catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Video list must not be empty", Toast.LENGTH_LONG).show();
+        }
+    }
 
     private void DeleteOldProductionVideos() {
         //get the production folder

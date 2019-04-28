@@ -11,11 +11,13 @@
 
         <ListView
             android:id="@+id/listViewVideos"
-            android:layout_width="128dp"
+            android:layout_width="144dp"
             android:layout_height="match_parent"
              />
 
         <VideoView
+            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             android:id="@+id/videoViewPlayer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

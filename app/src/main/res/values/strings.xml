@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FirstApplication</string>
+    <string name="app_name">MultiCam</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_ffmpeg_page">FFmpegPage</string>
     <string name="title_activity_production">Production</string>

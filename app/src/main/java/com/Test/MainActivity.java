@@ -14,8 +14,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         //new Binary(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
@@ -30,4 +28,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void btnListOfMergedVideos(View view) {
+        Intent intent = new Intent(this, ListOfMergedVideosActivity.class);
+        startActivity(intent);
+    }
 }
