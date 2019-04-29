@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListOfMergedVideosActivity">
-    <ListView
-        android:id="@+id/listMergedVideos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+    android:background="#000000"
+    tools:context=".PlayMergedVideoActivity">
 
+    <VideoView
+        android:layout_centerInParent="true"
+        android:id="@+id/merged_video_video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

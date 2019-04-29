@@ -11,6 +11,8 @@
     android:layout_marginTop="20dp"
     app:progress_stroke_width="10dp"
     app:progress_text_color="#fff"
+    app:progress_start_color="@color/design_default_color_primary"
+    app:progress_end_color="@color/design_default_color_primary_dark"
     android:layout_centerInParent="true"
     app:style="solid_line"
     android:id="@+id/circleProgressBar"/>

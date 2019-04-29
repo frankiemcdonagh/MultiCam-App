@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/mergedVideoThumbnail"
+        android:layout_width="150dp"
+        android:layout_height="94dp"
+        android:layout_margin="4dp"
+        />
+    <TextView
+        android:id="@+id/txtMergedLabel"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name:  "
+        android:layout_toEndOf="@+id/mergedVideoThumbnail"/>
+    <TextView
+        android:id="@+id/txtVideoName"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Concat video"
+        android:layout_toEndOf="@+id/txtMergedLabel"/>
+    <TextView
+        android:id="@+id/lblDate"
+        android:layout_below="@+id/txtMergedLabel"
+        android:layout_toEndOf="@id/mergedVideoThumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date: "
+        />
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/lblDate"
+        android:layout_below="@id/txtMergedLabel"
+        android:text="DateTime" />
+    <Button
+        android:id="@+id/btnShare_merged_video"
+        android:layout_toLeftOf="@id/btnPlay_merged_video"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@color/colorPrimary"
+        android:layout_margin="10dp"
+        android:drawableTop="@drawable/ic_share"/>
+    <Button
+        android:id="@+id/btnPlay_merged_video"
+        android:layout_toLeftOf="@id/item_delete_merged_video"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@color/colorPrimary"
+        android:layout_margin="10dp"
+        android:drawableTop="@drawable/ic_play_merged_video"/>
+    <Button
+        android:layout_alignParentEnd="true"
+        android:id="@+id/item_delete_merged_video"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:background="@color/colorPrimary"
+        android:drawableTop="@drawable/ic_delete_white" />
+</RelativeLayout>

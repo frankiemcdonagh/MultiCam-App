@@ -39,7 +39,6 @@ public class AddVideosActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_videos);
         videoList = findViewById(R.id.videoList);
-        HelpDialog();
         //create video array.
         videoArray = new ArrayList<>();
         //filling video list if there is a bundle present.
@@ -78,6 +77,10 @@ public class AddVideosActivity extends AppCompatActivity
         if(bundle != null) {
             newArray = bundle.getParcelableArrayList("list");
         }
+        else
+        {
+            HelpDialog();
+        }
         String mainVideo = i.getStringExtra("VideoPath");
         String startTime = i.getStringExtra("Average Time");
         if(mainVideo != null){
@@ -96,7 +99,7 @@ public class AddVideosActivity extends AppCompatActivity
     public void addVideo(View v)
     {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        
+
         i.setType("video/*");
 
         startActivityForResult(i, 100);

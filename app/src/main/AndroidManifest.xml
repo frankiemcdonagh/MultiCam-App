@@ -15,7 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ListOfMergedVideosActivity"></activity>
+        <activity
+            android:name=".PlayMergedVideoActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ListOfMergedVideosActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape"

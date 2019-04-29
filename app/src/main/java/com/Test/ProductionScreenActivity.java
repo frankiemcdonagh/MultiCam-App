@@ -42,6 +42,7 @@ public class ProductionScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_production_screen);
         DeleteOldSelections();
         ClickedPath = null;
+        RecorderPaths.clear();
         counter = 0;
         CreateDialog();
 

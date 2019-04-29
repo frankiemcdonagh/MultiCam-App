@@ -49,6 +49,7 @@ public class SetStartTimeActivity extends AppCompatActivity {
     }
 
     public void btnPlayClick(View view) {
+        videoView.seekTo(0);
         videoView.start();
     }
 
