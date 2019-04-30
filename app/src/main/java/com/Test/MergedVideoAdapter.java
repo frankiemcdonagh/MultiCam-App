@@ -47,6 +47,9 @@ public class MergedVideoAdapter extends ArrayAdapter<MergedVideoModel> {
         bmThumbnail = ThumbnailUtils.createVideoThumbnail(VideoPath, MediaStore.Video.Thumbnails.MINI_KIND);
         iv.setImageBitmap(bmThumbnail);
 
+        TextView textViewDate = convertView.findViewById(R.id.txtDate);
+        textViewDate.setText(getItem(position).getDate().toString());
+
         Button buttonDelete = convertView.findViewById(R.id.item_delete_merged_video);
         Button buttonPlay = convertView.findViewById(R.id.btnPlay_merged_video);
         Button buttonShare = convertView.findViewById(R.id.btnShare_merged_video);
