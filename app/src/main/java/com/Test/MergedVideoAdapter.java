@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
@@ -22,7 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MergedVideoAdapter extends ArrayAdapter<MergedVideoModel> {
     public ArrayList<MergedVideoModel> list;
@@ -48,7 +52,15 @@ public class MergedVideoAdapter extends ArrayAdapter<MergedVideoModel> {
         iv.setImageBitmap(bmThumbnail);
 
         TextView textViewDate = convertView.findViewById(R.id.txtDate);
-        textViewDate.setText(getItem(position).getDate().toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        Date date = getItem(position).getDate();
+
+        textViewDate.setText(sdf.format(date));
+
+
+        TextView textViewName = convertView.findViewById(R.id.txtVideoName);
+        File file = new File(VideoPath);
+        textViewName.setText(file.getName());
 
         Button buttonDelete = convertView.findViewById(R.id.item_delete_merged_video);
         Button buttonPlay = convertView.findViewById(R.id.btnPlay_merged_video);
