@@ -8,7 +8,7 @@
     <Button
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginStart="650dp"
+        android:layout_marginStart="675dp"
         android:drawableTop="@drawable/ic_help_black_24dp"
         android:background="@color/colorPrimary"
         android:onClick="btnInfo"
