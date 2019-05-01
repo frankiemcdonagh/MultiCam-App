@@ -16,15 +16,14 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".MainScreenActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".PlayMergedVideoActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".ListOfMergedVideosActivity"
             android:screenOrientation="landscape" />
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProgressBarConcatActivity"
             android:screenOrientation="landscape"
@@ -39,8 +38,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddVideosActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".SplashScreenActivity"
             android:screenOrientation="landscape"

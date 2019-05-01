@@ -72,7 +72,6 @@ public class CustomAdapter extends ArrayAdapter<VideoListItemModel> {
         buttonAddTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent i = new Intent(mContext, SetStartTimeActivity.class);
                 i.putExtra("MainVideo", path);
                 Bundle b = new Bundle();

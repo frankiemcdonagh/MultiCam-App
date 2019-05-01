@@ -64,7 +64,7 @@ public class ProgressBarConcatActivity extends AppCompatActivity {
                             circleProgressBar.setProgress(integer);
                             stopService(myIntent);
                             Toast.makeText(getApplicationContext(), "Video Saved to Merged videos Folder", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(ProgressBarConcatActivity.this, MainActivity.class);
+                            Intent i = new Intent(ProgressBarConcatActivity.this, MainScreenActivity.class);
                             startActivity(i);
                         }
                     }

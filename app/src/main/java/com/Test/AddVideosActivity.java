@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class AddVideosActivity extends AppCompatActivity
 {
@@ -49,22 +51,12 @@ public class AddVideosActivity extends AppCompatActivity
 
     }
 
-    private void HelpDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("New Project")
-                .setMessage("Add Videos to the page")
-                .setMessage("Ensure to add start times for each video")
-
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-
-
-                }).create().show();
-
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
+
 
     @Override
     protected void onResume(){
@@ -76,10 +68,6 @@ public class AddVideosActivity extends AppCompatActivity
         Bundle bundle = i.getExtras();
         if(bundle != null) {
             newArray = bundle.getParcelableArrayList("list");
-        }
-        else
-        {
-            HelpDialog();
         }
         String mainVideo = i.getStringExtra("VideoPath");
         String startTime = i.getStringExtra("Average Time");
