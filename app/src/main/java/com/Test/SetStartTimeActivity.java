@@ -2,6 +2,7 @@ package com.Test;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,7 +26,7 @@ public class SetStartTimeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_start_time);
-
+        setToolbar();
         //Setting the video path
         videoView = findViewById(R.id.videoViewStartTime);
         Intent i = getIntent();
@@ -38,6 +39,20 @@ public class SetStartTimeActivity extends AppCompatActivity {
         startTimesAdapter = new StartTimesAdapter(this, R.layout.add_start_time_item, startTimes);
         ListView listView = findViewById(R.id.listViewStartTimeVideos);
         listView.setAdapter(startTimesAdapter);
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+    }
+
+    public void btnInfo(View view) {
+        AlertDialog.Builder mbuilder = new AlertDialog.Builder(SetStartTimeActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_set_start_time, null);
+        mbuilder.setView(mView);
+        AlertDialog dialog = mbuilder.create();
+        dialog.show();
     }
 
     public void btnStartTimeClick(View view) {

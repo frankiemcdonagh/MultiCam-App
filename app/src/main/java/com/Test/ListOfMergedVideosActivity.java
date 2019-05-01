@@ -1,8 +1,11 @@
 package com.Test;
 
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 
 import java.io.File;
@@ -14,6 +17,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ListOfMergedVideosActivity extends AppCompatActivity {
 
@@ -24,13 +28,25 @@ public class ListOfMergedVideosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_merged_videos);
         ListView listOfVideos = findViewById(R.id.listMergedVideos);
-
+        setToolbar();
         fillArrayList();
 
 
         Collections.sort(mergedVideoModels, Collections.reverseOrder());
         mergedVideoAdapter = new MergedVideoAdapter(this, R.layout.merged_video_list_item, mergedVideoModels);
         listOfVideos.setAdapter(mergedVideoAdapter);
+    }
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+    }
+    public void btnInfo(View view) {
+        AlertDialog.Builder mbuilder = new AlertDialog.Builder(ListOfMergedVideosActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_merged_videos, null);
+        mbuilder.setView(mView);
+        AlertDialog dialog = mbuilder.create();
+        dialog.show();
     }
 
     private void fillArrayList()  {

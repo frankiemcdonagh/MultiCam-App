@@ -5,7 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".SetStartTimeActivity">
 
+    <include android:id="@+id/app_bar"
+        layout="@layout/app_bar_main_screen"/>
+
     <VideoView
+        android:layout_below="@id/app_bar"
         android:id="@+id/videoViewStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,6 +31,7 @@
 
     <Button
         android:id="@+id/btnStartTime"
+        android:layout_below="@id/app_bar"
         android:layout_marginTop="10dp"
         android:layout_width="70dp"
         android:layout_height="60dp"
@@ -40,6 +45,7 @@
 
     <Button
         android:id="@+id/btnPlay"
+        android:layout_below="@id/app_bar"
         android:layout_marginRight="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="10dp"

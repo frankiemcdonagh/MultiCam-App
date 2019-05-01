@@ -40,6 +40,7 @@ public class AddVideosActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_videos);
+        setToolbar();
         videoList = findViewById(R.id.videoList);
         //create video array.
         videoArray = new ArrayList<>();
@@ -56,8 +57,13 @@ public class AddVideosActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
-
-
+    public void btnInfo(View view) {
+        AlertDialog.Builder mbuilder = new AlertDialog.Builder(AddVideosActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_add_videos_help, null);
+        mbuilder.setView(mView);
+        AlertDialog dialog = mbuilder.create();
+        dialog.show();
+    }
     @Override
     protected void onResume(){
         super.onResume();

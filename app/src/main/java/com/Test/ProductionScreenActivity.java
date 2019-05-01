@@ -102,19 +102,11 @@ public class ProductionScreenActivity extends AppCompatActivity {
 
     }
     private void CreateDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Production page")
-                .setMessage("select a screen from the list of videos to start.")
-
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-
-
-                }).create().show();
-
+        AlertDialog.Builder mbuilder = new AlertDialog.Builder(ProductionScreenActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_production_screen, null);
+        mbuilder.setView(mView);
+        AlertDialog dialog = mbuilder.create();
+        dialog.show();
     }
 
         private void openDialog() {

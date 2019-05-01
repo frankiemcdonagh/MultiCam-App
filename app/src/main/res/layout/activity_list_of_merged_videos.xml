@@ -5,8 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ListOfMergedVideosActivity">
+    <include android:id="@+id/app_bar"
+        layout="@layout/app_bar_main_screen"/>
     <ListView
         android:id="@+id/listMergedVideos"
+        android:layout_below="@id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
 
