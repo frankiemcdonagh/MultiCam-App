@@ -75,19 +75,21 @@ public class SetStartTimeActivity extends AppCompatActivity {
         if(bundle != null) {
             arrayList = bundle.getParcelableArrayList("list");
         }
-        int sum = 0;
-        int counter = 0;
-        int average;
-        for(StartTimeModel time : startTimes)
-        {
-            counter++;
-            int intStartTime = time.getStartTime();
-            sum += intStartTime;
+        String stringAverage = "0";
+        if(startTimes.size() != 0) {
+            int sum = 0;
+            int counter = 0;
+            int average;
+            for (StartTimeModel time : startTimes) {
+                counter++;
+                int intStartTime = time.getStartTime();
+                sum += intStartTime;
+            }
+            //DecimalFormat df = new DecimalFormat("#.##")        average = sum/counter;
+            //average = average/1000;
+            average = sum / counter;
+            stringAverage = Integer.toString(average);
         }
-        //DecimalFormat df = new DecimalFormat("#.##")        average = sum/counter;
-        //average = average/1000;
-        average = sum/counter;
-        String stringAverage = Integer.toString(average);
         //stringAverage = df.format(stringAverage);
         Intent i = new Intent(this, AddVideosActivity.class);
         i.putExtra("VideoPath", videoPath);
