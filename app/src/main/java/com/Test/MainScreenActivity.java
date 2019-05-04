@@ -1,13 +1,17 @@
 package com.Test;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import java.io.File;
 import java.util.Objects;
 
 public class MainScreenActivity extends AppCompatActivity {
@@ -34,12 +38,32 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
     public void btnPreviousProject(View view) {
-        Intent intent = new Intent(this, ProductionScreenActivity.class);
-        startActivity(intent);
+        try {
+            String path = Environment.getExternalStorageDirectory().toString() + "/TempProductionVideos";
+            Log.d("Files", "Path: " + path);
+            File f = new File(path);
+            File file[] = f.listFiles();
+            Log.d("Files", "Size: " + file.length);
+            Intent intent = new Intent(this, ProductionScreenActivity.class);
+            startActivity(intent);
+        }
+        catch (Exception e){
+            Toast.makeText(getApplicationContext(), "No previous project available", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void btnListOfMergedVideos(View view) {
-        Intent intent = new Intent(this, ListOfMergedVideosActivity.class);
-        startActivity(intent);
+        try {
+            String path = Environment.getExternalStorageDirectory().toString() + "/ConcatVideos";
+            Log.d("Files", "Path: " + path);
+            File f = new File(path);
+            File file[] = f.listFiles();
+            Log.d("Files", "Size: " + file.length);
+            Intent intent = new Intent(this, ListOfMergedVideosActivity.class);
+            startActivity(intent);
+        }
+        catch (Exception e){
+            Toast.makeText(getApplicationContext(), "No Merged Videos available", Toast.LENGTH_LONG).show();
+        }
     }
 }
