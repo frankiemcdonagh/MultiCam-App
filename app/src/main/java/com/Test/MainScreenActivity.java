@@ -14,6 +14,14 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.Objects;
 
+/*
+    MainScreenActivity, created by Frankie McDonagh
+    Date:
+
+    This Activity contains code from from:
+    Yuri, accessed from https://stackoverflow.com/questions/8646984/how-to-list-files-in-an-android-directory.
+ */
+
 public class MainScreenActivity extends AppCompatActivity {
 
     @Override
@@ -39,6 +47,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
     public void btnPreviousProject(View view) {
         try {
+            //See above re: Yuri
             String path = Environment.getExternalStorageDirectory().toString() + "/TempProductionVideos";
             Log.d("Files", "Path: " + path);
             File f = new File(path);
@@ -46,6 +55,7 @@ public class MainScreenActivity extends AppCompatActivity {
             Log.d("Files", "Size: " + file.length);
             Intent intent = new Intent(this, ProductionScreenActivity.class);
             startActivity(intent);
+
         }
         catch (Exception e){
             Toast.makeText(getApplicationContext(), "No previous project available", Toast.LENGTH_LONG).show();
@@ -54,6 +64,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
     public void btnListOfMergedVideos(View view) {
         try {
+            //See above re: Yuri
             String path = Environment.getExternalStorageDirectory().toString() + "/ConcatVideos";
             Log.d("Files", "Path: " + path);
             File f = new File(path);

@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
+
+/*
+    CustomAdapter, created by Frankie McDonagh
+    Date:
+
+    This Activity contains code from from:
+    Miša Peić, accessed from https://stackoverflow.com/questions/3401579/get-filename-and-path-from-uri-from-mediastore.
+ */
 
 public class CustomAdapter extends ArrayAdapter<VideoListItemModel> {
     private static final String TAG = "CustomAdapter";
@@ -90,6 +101,7 @@ public class CustomAdapter extends ArrayAdapter<VideoListItemModel> {
 
         return convertView;
     }
+    //See above re: Miša Peić
     private String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {

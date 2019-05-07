@@ -8,6 +8,7 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 public class PlayMergedVideoActivity extends AppCompatActivity {
+
     VideoView videoView;
     MediaController mediaController;
     @Override

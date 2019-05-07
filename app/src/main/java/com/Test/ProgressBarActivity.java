@@ -14,7 +14,13 @@ import android.widget.Toast;
 import com.dinuscxj.progressbar.CircleProgressBar;
 
 import java.util.ArrayList;
+/*
+    ProgressBarActivity, created by Frankie McDonagh
+    Date:
 
+    This Activity contains code from from:
+    programming experts, https://www.youtube.com/watch?v=0akRhC9njlg
+ */
 public class ProgressBarActivity extends AppCompatActivity {
     CircleProgressBar circleProgressBar;
     ArrayList<ProductionVideoModel> productionVideoModelArrayList = new ArrayList<>();
@@ -71,6 +77,7 @@ public class ProgressBarActivity extends AppCompatActivity {
 
         final ServiceConnection conn = new ServiceConnection() {
             @Override
+            //See above re: programming experts
             public void onServiceConnected(ComponentName name, IBinder iBinder) {
                 FFMpegService.LocalBinder binder = (FFMpegService.LocalBinder)iBinder;
                 FFMpegService service = binder.getServiceInstance();

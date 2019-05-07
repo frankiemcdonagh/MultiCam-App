@@ -22,6 +22,7 @@ public class SetStartTimeActivity extends AppCompatActivity {
     StartTimesAdapter startTimesAdapter;
     String videoPath;
     ArrayList<VideoListItemModel> arrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

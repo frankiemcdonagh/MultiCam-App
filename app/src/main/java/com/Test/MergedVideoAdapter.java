@@ -37,6 +37,7 @@ public class MergedVideoAdapter extends ArrayAdapter<MergedVideoModel> {
         mContext = context;
         mResource = resource;
         list = objects;
+
     }
     @NonNull
     @Override

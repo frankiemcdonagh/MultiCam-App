@@ -21,6 +21,7 @@ import android.widget.VideoView;
 import java.util.ArrayList;
 import java.util.Objects;
 
+
 public class ProductionVideoAdapter extends ArrayAdapter<ProductionPathModel> {
     public ArrayList<ProductionPathModel> list;
     private Context mContext;

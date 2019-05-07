@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.xml.transform.Templates;
 
+
 public class StartTimesAdapter extends ArrayAdapter<StartTimeModel> {
     public ArrayList<StartTimeModel> list;
     private Context mContext;

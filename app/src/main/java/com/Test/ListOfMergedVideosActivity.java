@@ -19,6 +19,14 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+/*
+    CustomAdapter, created by Frankie McDonagh
+    Date:
+
+    This Activity contains code from from:
+    Yuri, accessed from https://stackoverflow.com/questions/8646984/how-to-list-files-in-an-android-directory.
+ */
+
 public class ListOfMergedVideosActivity extends AppCompatActivity {
 
     MergedVideoAdapter mergedVideoAdapter;
@@ -49,6 +57,7 @@ public class ListOfMergedVideosActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    //See above re: Yuri
     private void fillArrayList()  {
         String path = Environment.getExternalStorageDirectory().toString()+"/ConcatVideos";
         File f = new File(path);

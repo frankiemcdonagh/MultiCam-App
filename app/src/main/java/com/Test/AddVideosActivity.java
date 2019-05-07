@@ -26,6 +26,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+/*
+    AddVideosActivity, created by Frankie McDonagh
+    Date:
+
+    This Activity contains code from from:
+    Chikka Anddev, accessed from https://stackoverflow.com/questions/4943629/how-to-delete-a-whole-folder-and-content/4943771.
+    Miša Peić, accessed from https://stackoverflow.com/questions/3401579/get-filename-and-path-from-uri-from-mediastore.
+ */
 
 public class AddVideosActivity extends AppCompatActivity
 {
@@ -129,6 +137,7 @@ public class AddVideosActivity extends AppCompatActivity
         }
     }
 
+    //See above re: Chikka Andev
     private void DeleteOldProductionVideos() {
         //get the production folder
         File dir = new File(Environment.getExternalStorageDirectory()+"/TempProductionVideos");
@@ -194,6 +203,7 @@ public class AddVideosActivity extends AppCompatActivity
         return returnDouble;
 
     }
+    //See above re: Miša Peić
     private String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {

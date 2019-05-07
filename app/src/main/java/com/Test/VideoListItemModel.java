@@ -3,6 +3,7 @@ package com.Test;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
 public class VideoListItemModel implements Parcelable {
     private String name;
     private String startTime;

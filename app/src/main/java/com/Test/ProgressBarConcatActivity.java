@@ -14,7 +14,13 @@ import android.widget.Toast;
 import com.dinuscxj.progressbar.CircleProgressBar;
 
 import java.util.ArrayList;
+/*
+    ProgressBarConcatActivity, created by Frankie McDonagh
+    Date:
 
+    This Activity contains code from from:
+    programming experts, https://www.youtube.com/watch?v=0akRhC9njlg
+ */
 public class ProgressBarConcatActivity extends AppCompatActivity {
     CircleProgressBar circleProgressBar;
     ArrayList<ProductionVideoModel> productionVideoModelArrayList = new ArrayList<>();
@@ -46,6 +52,7 @@ public class ProgressBarConcatActivity extends AppCompatActivity {
 
         final ServiceConnection conn = new ServiceConnection() {
             @Override
+            //See above re: programming experts
             public void onServiceConnected(ComponentName name, IBinder iBinder) {
                 TrimAndConcatService.LocalBinder binder = (TrimAndConcatService.LocalBinder)iBinder;
                 TrimAndConcatService service = binder.getServiceInstance();

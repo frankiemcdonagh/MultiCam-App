@@ -23,6 +23,16 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/*
+    ProductionScreenActivity, created by Frankie McDonagh
+    Date:
+
+    This Activity contains code from from:
+    Yuri, accessed from https://stackoverflow.com/questions/8646984/how-to-list-files-in-an-android-directory.
+    vir us, accessed from https://stackoverflow.com/questions/3936396/how-to-get-duration-of-a-video-file.
+    Sohail Zahid, accessed from https://stackoverflow.com/questions/39389031/how-to-delete-all-files-in-a-directory-java-android-app-current-code-is-deletin
+ */
+
 public class ProductionScreenActivity extends AppCompatActivity {
 
 
@@ -52,6 +62,7 @@ public class ProductionScreenActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.listViewVideos);
         videoView = findViewById(R.id.videoViewPlayer);
         productionPathModels = new ArrayList<>();
+        //See above re: Yuri
         String path = Environment.getExternalStorageDirectory().toString()+"/TempProductionVideos";
         Log.d("Files", "Path: " + path);
         File f = new File(path);
@@ -148,6 +159,7 @@ public class ProductionScreenActivity extends AppCompatActivity {
                             try{
                                 duration = RecordedStartTimes.get(i2) - startTime;
                             }
+                            //See above re: vir us
                             catch (Exception e) {
                                 Uri videoUri = Uri.parse(RecorderPaths.get(i));
                                 MediaMetadataRetriever retriever = new MediaMetadataRetriever();
@@ -180,7 +192,7 @@ public class ProductionScreenActivity extends AppCompatActivity {
 
 
     }
-
+    //See above re: Sohail Zahid
     private void DeleteOldSelections() {
         //get the production folder
         File dir = new File(Environment.getExternalStorageDirectory()+"/TempSelectionVideos");

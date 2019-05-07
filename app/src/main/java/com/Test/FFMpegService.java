@@ -18,6 +18,15 @@ import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedExceptio
 
 import java.util.ArrayList;
 
+/*
+    FFMpegService, created by Frankie McDonagh
+    Date:
+
+    This Activity contains code from from:
+    programming experts, https://www.youtube.com/watch?v=0akRhC9njlg
+ */
+
+//See above re: programming experts
 public class FFMpegService extends Service {
     FFmpeg ffMpeg;
 
@@ -71,12 +80,12 @@ public class FFMpegService extends Service {
             }
 
             @Override
+            //See above re: programming experts
             public void onProgress(String message) {
                 String[] arr;
                 if(message.contains("time=")){
                     arr = message.split("time=");
                     String yalo = arr[1];
-
                     String abikamha[] = yalo.split(":");
                     String[] yeanda = abikamha[2].split(" ");
                     String seconds = yeanda[0];

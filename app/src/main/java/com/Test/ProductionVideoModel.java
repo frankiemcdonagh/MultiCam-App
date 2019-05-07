@@ -3,6 +3,7 @@ package com.Test;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
 public class ProductionVideoModel implements Parcelable {
     private String[] command;
     private Double duration;

@@ -22,7 +22,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
+/*
+    FFMpegService, created by Frankie McDonagh
+    Date:
 
+    This Activity contains code from from:
+    programming experts, https://www.youtube.com/watch?v=0akRhC9njlg.
+    Gokhan Celikkaya, https://stackoverflow.com/questions/20325615/android-concatenate-two-videos.
+    Yuri, accessed from https://stackoverflow.com/questions/8646984/how-to-list-files-in-an-android-directory.
+ */
+
+//See above re: programming experts
 public class TrimAndConcatService extends Service {
     FFmpeg ffMpeg;
     FFmpeg fFmpegConcat;
@@ -137,6 +147,7 @@ public class TrimAndConcatService extends Service {
     private String[] GetConcatCommand(File Destination) {
         final ArrayList<String> paths = new ArrayList<>();
         final ArrayList<String> commandList = new ArrayList<>();
+        //See above re: Yuri
         String path = Environment.getExternalStorageDirectory().toString()+"/TempSelectionVideos";
         File f = new File(path);
         File file[] = f.listFiles();
@@ -144,6 +155,7 @@ public class TrimAndConcatService extends Service {
         {
             paths.add(file[i].toString());
         }
+        //See above re: Gokhan Celikkaya
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < paths.size(); i++)
         {
