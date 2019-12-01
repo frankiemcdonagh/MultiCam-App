@@ -1,4 +1,4 @@
-package com.Test;
+package com.MultiCamPack;
 
 import org.junit.Test;
 

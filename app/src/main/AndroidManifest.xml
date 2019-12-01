@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.Test">
+    package="com.MultiCamPack">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -16,31 +16,31 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainScreenActivity"
+            android:name="com.MultiCamPack.MainScreenActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".PlayMergedVideoActivity"
+            android:name="com.MultiCamPack.PlayMergedVideoActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ListOfMergedVideosActivity"
+            android:name="com.MultiCamPack.ListOfMergedVideosActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ProgressBarConcatActivity"
+            android:name="com.MultiCamPack.ProgressBarConcatActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ProgressBarActivity"
+            android:name="com.MultiCamPack.ProgressBarActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SetStartTimeActivity"
+            android:name="com.MultiCamPack.SetStartTimeActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddVideosActivity"
+            android:name="com.MultiCamPack.AddVideosActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name="com.MultiCamPack.SplashScreenActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -50,16 +50,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProductionScreenActivity"
+            android:name="com.MultiCamPack.ProductionScreenActivity"
             android:label="@string/title_activity_production"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".FFMpegService"
+            android:name="com.MultiCamPack.FFMpegService"
             android:enabled="true" />
         <service
-            android:name=".TrimAndConcatService"
+            android:name="com.MultiCamPack.TrimAndConcatService"
             android:enabled="true" />
     </application>
 

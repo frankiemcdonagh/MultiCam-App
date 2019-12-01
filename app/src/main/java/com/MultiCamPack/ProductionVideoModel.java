@@ -1,4 +1,4 @@
-package com.Test;
+package com.MultiCamPack;
 
 import android.os.Parcel;
 import android.os.Parcelable;

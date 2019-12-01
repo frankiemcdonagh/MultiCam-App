@@ -1,4 +1,4 @@
-package com.Test;
+package com.MultiCamPack;
 
 import android.app.Activity;
 import android.app.Service;

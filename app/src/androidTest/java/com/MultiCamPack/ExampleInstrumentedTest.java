@@ -1,4 +1,4 @@
-package com.Test;
+package com.MultiCamPack;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.Test", appContext.getPackageName());
+        assertEquals("com.MultiCamPack", appContext.getPackageName());
     }
 }
