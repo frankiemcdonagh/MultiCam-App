@@ -11,11 +11,12 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
-import com.github.hiteshsondhi88.libffmpeg.FFmpegLoadBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
-import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
+
+import com.github.kohiyadav.libffmpeg.ExecuteBinaryResponseHandler;
+import com.github.kohiyadav.libffmpeg.FFmpeg;
+import com.github.kohiyadav.libffmpeg.FFmpegLoadBinaryResponseHandler;
+import com.github.kohiyadav.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
+import com.github.kohiyadav.libffmpeg.exceptions.FFmpegNotSupportedException;
 
 
 import java.io.File;
