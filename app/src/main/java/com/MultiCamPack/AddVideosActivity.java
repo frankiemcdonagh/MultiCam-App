@@ -140,9 +140,11 @@ public class AddVideosActivity extends AppCompatActivity
         if (dir.isDirectory())
         {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++)
-            {
+            if(children != null) {
+
+                for (int i = 0; i < children.length; i++) {
                 new File(dir, children[i]).delete();
+                }
             }
         }
     }
@@ -190,6 +192,7 @@ public class AddVideosActivity extends AppCompatActivity
                 int durationAfterStartTime = timeInMillisec - startTime;
                 durations.add(durationAfterStartTime);
                 retriever.release();
+                //ii
             }
             Collections.sort(durations);
 

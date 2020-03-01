@@ -86,13 +86,13 @@ public class FFMpegService extends Service {
                 String[] arr;
                 if(message.contains("time=")){
                     arr = message.split("time=");
-                    String yalo = arr[1];
-                    String abikamha[] = yalo.split(":");
-                    String[] yeanda = abikamha[2].split(" ");
-                    String seconds = yeanda[0];
-                    int hours = Integer.parseInt(abikamha[0]);
+                    String var1 = arr[1];
+                    String var2[] = var1.split(":");
+                    String[] var3 = var2[2].split(" ");
+                    String seconds = var3[0];
+                    int hours = Integer.parseInt(var2[0]);
                     hours = hours * 3600;
-                    int min = Integer.parseInt(abikamha[1]);
+                    int min = Integer.parseInt(var2[1]);
                     float sec = Float.valueOf(seconds);
                     float timeInSec = hours+min+sec;
                     int progress = (int)((timeInSec/duration)*100);
